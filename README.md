@@ -284,9 +284,9 @@ Display categories: Existing Data Center, Hard Exclusion, High Community Impact,
 If you use this work, please cite:
 
 ```
-[Author]. (2025). OSDCI: Open Source Data Center Intelligence —
+Arnold, G. (2025). OSDCI: Open Source Data Center Intelligence —
 A Geospatial ML Framework for Infrastructure Siting Optimization.
-GitHub. https://github.com/[username]/osdci-pipeline
+GitHub. https://github.com/gabenotgave/osdci-pipeline
 ```
 
 Data sources should be cited individually per their license requirements — see the Data sources table above.
