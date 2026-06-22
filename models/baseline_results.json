@@ -1,0 +1,28 @@
+{
+  "model": "LightGBM baseline",
+  "model_version": "v2_regularized",
+  "train_cells": 199881,
+  "test_cells": 14264,
+  "train_positives": 405,
+  "train_soft_positives": 1781,
+  "test_positives": 68,
+  "test_states": [
+    "NJ",
+    "CO",
+    "WA"
+  ],
+  "hard_positives": 473,
+  "soft_positives": 2039,
+  "soft_label_weight": 0.25,
+  "n_features": 61,
+  "best_iteration": 216,
+  "train_auc_roc": 0.9885225587335115,
+  "train_auc_pr": 0.21870378404324164,
+  "auc_roc": 0.9712170371107022,
+  "auc_pr": 0.18587351061406804,
+  "precision_at_r60": 0.0047672462142456535,
+  "threshold_at_r60": 0.0008708121219390202,
+  "top_100_precision": 0.16,
+  "top_500_precision": 0.102,
+  "top_1000_precision": 0.056
+}

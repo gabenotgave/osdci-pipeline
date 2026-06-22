@@ -1,0 +1,32 @@
+OSDCI — Open Source Data Center Intelligence
+Copyright 2026 Gabriel Arnold
+
+This product includes software and data derived from the
+following third-party sources:
+
+IM3 Open Source Data Center Atlas
+  Source: Pacific Northwest National Laboratory / U.S. DOE
+  License: Open Database License (ODbL)
+  URL: https://www.osti.gov/biblio/3017294
+
+WRI Aqueduct 4.0
+  Source: World Resources Institute
+  License: Creative Commons Attribution 4.0 (CC BY 4.0)
+  URL: https://www.wri.org/data/aqueduct-water-risk-atlas
+
+WorldPop 2020 UN-adjusted Population Count
+  Source: WorldPop, University of Southampton
+  License: Creative Commons Attribution 4.0 (CC BY 4.0)
+  URL: https://www.worldpop.org
+
+PRISM Climate Data
+  Source: PRISM Climate Group, Oregon State University
+  License: CC BY 4.0
+  URL: https://prism.oregonstate.edu
+
+All other source datasets are U.S. federal government works
+in the public domain. See README.md for full data source table.
+
+Model outputs and pipeline artifacts derived from ODbL-licensed
+source data (IM3 Atlas) are subject to ODbL share-alike terms.
+See https://opendatacommons.org/licenses/odbl/ for details.

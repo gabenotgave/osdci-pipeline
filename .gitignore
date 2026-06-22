@@ -1,0 +1,76 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+osdci.egg-info/
+dist/
+build/
+.eggs/
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Data — all raw and processed data is too large for git
+# Reproduce by running the pipeline (see README)
+data/raw/
+data/processed/
+
+# Model artifacts — large files, reproduced by running pipeline
+models/*.pkl
+models/spatial_residuals.csv
+
+# Model artifacts to KEEP in git (small, useful for reference):
+#   models/baseline_results.json
+#   models/feature_importances.csv
+
+# Handoff files are large — ignore and regenerate via compute_final_scores.py
+# (or track with Git LFS if preferred)
+models/top_candidates.geojson
+models/basemap.csv
+models/cell_explanations.json
+
+# Checkpoints and caches from long-running scripts
+data/raw/*.pkl
+data/raw/*.parquet
+data/raw/*.tif
+data/raw/*.zip
+data/raw/*.csv
+data/raw/*.gpkg
+data/raw/*.gdb
+data/raw/*.shp
+data/raw/*.dbf
+data/raw/*.shx
+data/raw/*.prj
+data/raw/*.cpg
+
+# Jupyter notebooks checkpoints (if any added later)
+.ipynb_checkpoints/
+*.ipynb
+
+# OS files
+.DS_Store
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+logs/

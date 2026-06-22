@@ -1,0 +1,1 @@
+"""OSDCI spatial scoring pipeline."""
