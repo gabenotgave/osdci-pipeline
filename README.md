@@ -4,7 +4,7 @@
 
 ## Overview
 
-OSDCI is an open research pipeline that scores every H3 hexagonal grid cell across the CONUS on infrastructure viability and environmental impact constraints. The model learns from known data center facility locations (IM3 Open Source Data Center Atlas) and produces ranked candidate sites for infrastructure planners evaluating cost, grid access, network connectivity, and sustainability trade-offs. The pipeline processes ~214,000 res-6 cells (~36 km² each), assembles 60+ geospatial features from 18 public datasets, trains a LightGBM classifier with spatial holdout validation, and exports frontend-ready artifacts for interactive exploration.
+OSDCI is an open research pipeline that scores every H3 hexagonal grid cell across the CONUS on infrastructure viability and environmental impact constraints. The model learns from known data center facility locations (IM3 Open Source Data Center Atlas) and produces ranked candidate sites for infrastructure planners evaluating cost, grid access, network connectivity, and sustainability trade-offs. The pipeline processes ~214,000 res-6 cells (~2.2 km² each), assembles 60+ geospatial features from 18 public datasets, trains a LightGBM classifier with spatial holdout validation, and exports frontend-ready artifacts for interactive exploration.
 
 ## Key findings
 
