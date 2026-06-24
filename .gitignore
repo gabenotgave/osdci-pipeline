@@ -23,6 +23,7 @@ ENV/
 # Reproduce by running the pipeline (see README)
 data/raw/
 data/processed/
+data/processed/scored_cells_app.parquet
 *.parquet
 
 # Model artifacts — large files, reproduced by running pipeline

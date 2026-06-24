@@ -34,7 +34,7 @@ REQUIRED=(
   "models/top_candidates.geojson"
   "models/basemap.csv"
   "models/cell_explanations.json"
-  "data/processed/scored_cells.parquet"
+  "data/processed/scored_cells_app.parquet"
   "models/baseline_results.json"
   "models/feature_importances.csv"
 )
@@ -74,9 +74,9 @@ cp models/cell_explanations.json \
    "$BACKEND_DATA/cell_explanations.json"
 echo "✓ backend/data/cell_explanations.json"
 
-cp data/processed/scored_cells.parquet \
+cp data/processed/scored_cells_app.parquet \
    "$BACKEND_DATA/scored_cells.parquet"
-echo "✓ backend/data/scored_cells.parquet"
+echo "✓ backend/data/scored_cells.parquet (app-filtered)"
 
 # Frontend static data files
 cp models/top_candidates.geojson \

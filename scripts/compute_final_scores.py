@@ -308,8 +308,8 @@ def export_top_candidates_geojson(
     if get_cell_boundary is None:
         raise RuntimeError("h3 library missing cell_to_boundary / h3_to_geo_boundary")
 
-    scored_with_components = add_penalty_components(scored_df)
-    viable = filter_viable_pool(scored_with_components)
+    
+    viable = filter_viable_pool(scored_df)
     features: list[dict] = []
 
     for _, row in viable.iterrows():
@@ -630,6 +630,19 @@ def compute_final_scores(
     )
     df["display_category"] = display_category(df)
 
+    # Add c_* penalty components for frontend weight sliders
+    df["final_score_pct"] = (df["final_score"] * 100).round(1)
+    df["c_protected_area"] = df["in_protected_area"].fillna(0).astype(float)
+    df["c_wetland"] = df["in_wetland"].fillna(0).astype(float)
+    df["c_tribal_land"] = df["in_tribal_land"].fillna(0).astype(float)
+    df["c_critical_habitat"] = df["in_critical_habitat"].fillna(0).astype(float)
+    df["c_floodplain"] = df["in_floodplain_100yr"].fillna(0).astype(float)
+    df["c_wildfire"] = df["in_high_wildfire"].fillna(0).astype(float)
+    df["c_seismic"] = df["in_high_seismic"].fillna(0).astype(float)
+    df["c_water_stress"] = df["high_water_stress"].fillna(0).astype(float)
+    df["c_ej_burden"] = df["demographic_index_norm"].fillna(0).astype(float)
+    df["c_population"] = df["pop_within_25mi_norm"].fillna(0).astype(float)
+
     log("Assigning state_abb to all cells...")
     df["state_abb"] = df.apply(
         lambda row: assign_state(row["lat"], row["lon"]),
@@ -638,32 +651,42 @@ def compute_final_scores(
     state_coverage = df["state_abb"].notnull().sum()
     log(f"Cells with state_abb: {state_coverage:,} of {len(df):,}")
 
-    output_cols = [
+    EXPECTED_COLS = [
         "h3_index",
         "lat",
         "lon",
-        "has_dc",
         "viability_score",
-        "impact_penalty",
         "final_score",
+        "final_score_pct",
         "display_category",
+        "has_dc",
+        "c_protected_area",
+        "c_wetland",
+        "c_tribal_land",
+        "c_critical_habitat",
+        "c_floodplain",
+        "c_wildfire",
+        "c_seismic",
+        "c_water_stress",
+        "c_ej_burden",
+        "c_population",
+        "dist_nearest_ixp_km",
+        "dist_transmission_km",
         "state_abb",
-        "in_protected_area",
-        "in_wetland",
-        "in_floodplain_100yr",
-        "in_tribal_land",
-        "in_critical_habitat",
-        "in_high_wildfire",
-        "in_high_seismic",
-        "high_water_stress",
-        "is_soft_positive",
     ]
-    optional_cols = ["tribal_name", "critical_habitat_species_count"]
-    output_cols.extend(c for c in optional_cols if c in df.columns)
-    result = df[[c for c in output_cols if c in df.columns]].copy()
+    result = df[EXPECTED_COLS].copy()
 
     log(f"Writing {output_path.name}...")
     write_parquet_safe(result, output_path)
+
+    APP_THRESHOLD = BASEMAP_VIABILITY_THRESHOLD
+    app_df = result[result["viability_score"] >= APP_THRESHOLD].copy()
+    app_output_path = output_path.parent / "scored_cells_app.parquet"
+    write_parquet_safe(app_df, app_output_path)
+    log(f"App scored cells: {len(app_df):,} rows (viability >= {APP_THRESHOLD})")
+    assert 80000 < len(app_df) < 100000, (
+        f"Unexpected app cell count: {len(app_df):,} (expected ~88,445)"
+    )
 
     model_version = DEFAULT_MODEL_VERSION
     baseline_results = MODELS_DIR / "baseline_results.json"
