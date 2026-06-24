@@ -224,6 +224,71 @@ python scripts/sanity_check.py
 
 Several feature scripts support checkpoint/resume flags for long runs (see per-script `--help`). Step 11 (NLCD) and step 12 (impervious) require GDAL and rasterio.
 
+## Retraining and updating osdci-app
+
+After making changes to the pipeline or retraining
+the model, run the following sequence from the
+osdci-pipeline root:
+
+### Step 1 — Retrain the model
+
+```bash
+python scripts/train_baseline.py
+```
+
+This produces:
+- `models/baseline_lgbm.pkl`
+- `models/baseline_results.json`
+- `models/feature_importances.csv`
+- `models/spatial_residuals.csv`
+
+### Step 2 — Regenerate scored outputs
+
+```bash
+python scripts/compute_final_scores.py
+```
+
+This produces:
+- `models/top_candidates.geojson`
+- `models/basemap.csv`
+- `models/cell_explanations.json`
+- `data/processed/scored_cells.parquet`
+
+### Step 3 — Export to osdci-app
+
+```bash
+bash scripts/export_to_app.sh
+```
+
+This copies all required files to `../osdci-app`.
+Assumes osdci-app is at `../osdci-app` — edit `APP_DIR`
+in the script if your directory structure differs.
+
+### Step 4 — Commit and deploy
+
+```bash
+cd ../osdci-app
+git add backend/data/ frontend/public/data/
+git commit -m "refresh: update data files from pipeline"
+git push
+```
+
+Railway redeploys osdci-app automatically on push.
+
+### Full retrain one-liner
+
+Run all four steps in sequence from osdci-pipeline:
+
+```bash
+python scripts/train_baseline.py && \
+python scripts/compute_final_scores.py && \
+bash scripts/export_to_app.sh && \
+cd ../osdci-app && \
+git add backend/data/ frontend/public/data/ && \
+git commit -m "refresh: update data files from pipeline" && \
+git push
+```
+
 ## Model
 
 ### Architecture
