@@ -49,6 +49,11 @@ BASEMAP_COLS = [
     "c_tribal_land",
     "c_critical_habitat",
     "c_floodplain",
+    "c_wildfire",
+    "c_seismic",
+    "c_water_stress",
+    "c_ej_burden",
+    "c_population",
     "dist_nearest_ixp_km",
     "dist_transmission_km",
 ]
@@ -349,6 +354,15 @@ def build_basemap_row(row: dict) -> dict:
         "c_tribal_land": int(row.get("in_tribal_land", 0) or 0),
         "c_critical_habitat": int(row.get("in_critical_habitat", 0) or 0),
         "c_floodplain": int(row.get("in_floodplain_100yr", 0) or 0),
+        "c_wildfire": int(row.get("in_high_wildfire", 0) or 0),
+        "c_seismic": int(row.get("in_high_seismic", 0) or 0),
+        "c_water_stress": int(row.get("high_water_stress", 0) or 0),
+        "c_ej_burden": round(float(row["demographic_index_norm"]), 4)
+        if pd.notnull(row.get("demographic_index_norm"))
+        else 0.0,
+        "c_population": round(float(row["pop_within_25mi_norm"]), 4)
+        if pd.notnull(row.get("pop_within_25mi_norm"))
+        else 0.0,
         "dist_nearest_ixp_km": round(float(row["dist_nearest_ixp_km"]), 1)
         if pd.notnull(row.get("dist_nearest_ixp_km"))
         else "",
